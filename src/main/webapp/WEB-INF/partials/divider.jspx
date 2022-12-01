@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <jsp:directive.page language="java"
+       contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
+<jsp:element name="html">
+<jsp:body>
+<body>
+	<c:choose>
+		<c:when test="${empty param.isDarkDivider}">
+			<c:set value="divider-custom divider-light" var="dividerClass"/>
+		</c:when>
+		<c:when test="${not empty param.isDarkDivider}">
+			<c:set value="divider-custom" var="dividerClass"/>
+		</c:when>
+	</c:choose>
+	<div class="${dividerClass}">
+		<div class="divider-custom-line">
+			<!--  some content -->
+		</div>
+		<div class="divider-custom-icon">
+			<i class="fas fa-star">
+				<!--  some content -->
+			</i>
+		</div>
+		<div class="divider-custom-line">
+			<!--  some content -->
+		</div>
+	</div>
+</body>
+</jsp:body>
+</jsp:element>
+</jsp:root>

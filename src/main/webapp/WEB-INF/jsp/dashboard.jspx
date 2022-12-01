@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <jsp:directive.page language="java"
+       contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
+<jsp:element name="html">
+<jsp:body>
+<head>
+	<jsp:include page="/WEB-INF/partials/header.jspx"/>
+</head>
+<body id="page-top">
+	<jsp:include page="/WEB-INF/partials/navbar.jspx"/>
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container d-flex align-items-center flex-column">
+			<h1 class="masthead-heading mb-0">DASHBOARD</h1>
+			<jsp:include page="/WEB-INF/partials/divider.jspx"/>
+		</div>
+	</header>
+	<section class="page-section" id="feature-1">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading text-secondary d-inline-block mb-0">
+					WELCOME,
+					<c:out value="${userSession.name}"/></h2>
+				<h3 class="mt-2">Let's see how you are getting on!</h3>
+			</div>
+			<div class="container">
+				<div class="row mt-4 mb-4 d-flex justify-content-center">
+				<c:forEach var="goal" items="${userSession.goals}">
+					<div class="bg-secondary text-white rounded p-3 col-lg-4 mb-3 mt-3 mr-3 ml-3">
+						<h4 class="text-center">
+							Goal: <c:out value="${goal.goalName}"/>
+						</h4>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" style="width: ${(goal.currentProgress / goal.target) * 100}%" aria-valuenow="${goal.currentProgress}"
+								aria-valuemin="0" aria-valuemax="${goal.target}"> <!-- some content -->
+							</div>
+						</div>
+						<p class="large-text mt-2">
+							Progress: <c:out value="${goal.currentProgress} ${goal.goalUnit}"/>
+						</p>
+						<p class="large-text">
+							Target: <c:out value="${goal.target} ${goal.goalUnit}"/>
+						</p>
+						<div class="row container">
+						<a href="update-progress" class="btn btn-primary mt-2 mb-4" aria-label="Update progress for ${goal.goalName}">
+							Update progress
+						</a>
+						</div>
+						<div class="row container">
+						<a class="btn btn-primary" aria-label="Update goals for ${goal.goalName}"  href="update-goals">
+							Update goal
+						</a>
+						</div>
+					</div>	
+				</c:forEach>
+				
+				</div>
+				</div>
+				</div>
+	</section>
+	<section class="page-section bg-primary text-white mb-0" id="feature-2">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading d-inline-block mb-0">
+					ENTER YOUR DAILY PROGRESS</h2>
+			</div>
+				<div class="container">
+					<div class="row mt-4 mb-4 d-flex justify-content-center">
+						<a class="btn btn-secondary large-text " href="update-progress">
+							Update progress
+						</a>
+					</div>
+				</div>
+			</div>
+	</section>
+	<section class="page-section" id="feature-3">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading text-secondary d-inline-block mb-0">
+					CURRENT GOALS</h2>
+			</div>
+				<div class="container">
+					<div class="row mt-4 mb-4 d-flex justify-content-center">
+						<c:forEach var="goal" items="${userSession.goals}">
+							<div class="text-secondary p-3 mb-3 mt-3 mr-3 ml-3">
+								<h4 class="text-center">
+									Goal: <c:out value="${goal.goalName}"/> per day
+								</h4>
+								<p class="large-text mt-2">
+									Target: <c:out value="${goal.target} ${goal.goalUnit}"/>
+								</p>
+							</div>
+						</c:forEach>
+					</div>
+					<div class="row justify-content-center">
+						<a class="btn btn-primary large-text masthead-subheading" href="update-goals">
+							Update goals
+						</a>
+					</div> 
+				</div>
+				
+			</div>
+	</section>
+		<section class="page-section bg-primary text-white mb-0" id="feature-2">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading d-inline-block mb-0">
+					ACHIEVEMENTS UNLOCKED</h2>
+			</div>
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<c:if test="${empty userSession.achievements}">
+							<h3 class="portfolio text-center">You currently haven't earned any achievements</h3>
+						</c:if>
+					</div>
+					<div class="row d-flex justify-content-center">
+						<a href="" class="btn btn-secondary large-text">View this month's achievements</a>
+					</div>
+				</div>
+			</div>
+	</section>
+	<jsp:include page="/WEB-INF/partials/footer.jspx"/>
+</body>
+</jsp:body>
+</jsp:element>
+</jsp:root>
