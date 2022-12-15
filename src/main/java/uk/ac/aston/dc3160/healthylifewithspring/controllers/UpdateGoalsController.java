@@ -1,13 +1,23 @@
 package uk.ac.aston.dc3160.healthylifewithspring.controllers;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,5 +79,27 @@ public class UpdateGoalsController {
 		ModelAndView modelAndView =  new ModelAndView("redirect:/dashboard");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = {"/goal"}, method = RequestMethod.DELETE)
+    protected ResponseEntity<String> deleteGoals(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("userSession") UserSession userSession, @RequestParam String goalName) throws ServletException, IOException {
+		List<Goal> goals = userSession.getGoals();
+        boolean isSuccess = false;
+        
+        for(Goal goal: goals) {
+            if(goal.getGoalName().equals(goalName)) {
+                try {
+                    goalService.deleteGoal(goalName, userSession);
+                    goals.remove(goal);
+                    isSuccess = true;
+                    break;
+                } catch(Exception e) {
+                	logger.error("Exception occurred: ", e);
+                }
+            }
+        }
+        userSession.setGoals(goals);
+        if(isSuccess) return ResponseEntity.ok().build(); 
+        else return ResponseEntity.notFound().build();
+    }
 	
 }

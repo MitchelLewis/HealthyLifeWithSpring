@@ -97,5 +97,15 @@ public class GoalDAO extends JdbcDaoSupport {
 		statement.executeBatch();
 		conn.close();
 	}
+	
+	public void deleteGoal(String goalName, int userId) throws Exception {
+		Connection conn = dataSource.getConnection();
+		PreparedStatement statement = conn.prepareStatement("delete from user_goals WHERE userId = ? AND goalName = ?");
+		statement.setInt(1, userId);
+		statement.setString(2, goalName);
+		statement.execute();
+		statement.close();
+		conn.close();
+	}
 
 }

@@ -28,6 +28,11 @@ public class GoalService {
 		goalDAO.updateGoals(goalsToSet, userId);
 	}
 	
+	public void deleteGoal(String goalName, UserSession userSession) throws Exception {
+		int userId = userSession.getUser_id();
+		goalDAO.deleteGoal(goalName, userId);
+	}
+	
 	public void updateProgress(List<Goal> goalsToUpdate, UserSession userSession) throws Exception {
 		int userId = userSession.getUser_id();
 		goalDAO.updateProgress(goalsToUpdate, userId);

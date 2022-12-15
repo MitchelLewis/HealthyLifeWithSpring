@@ -59,3 +59,28 @@ function addGoalToForm(goalName, target, goalId) {
 	document.getElementById('goal-info-form').appendChild(inputElementForGoalName);
 	document.getElementById('goal-info-form').appendChild(inputElementForGoalTarget);
 }
+
+function deleteGoal(goalName) {
+    $.ajax({
+        type: "DELETE",
+        url: `goal?goalName=${goalName}`,
+        dataType: "text",
+        success: function(){
+            processResponse(goalName);
+        },
+        error: function (err) {
+			console.log("Failed to make AJAX call with error: " + JSON.stringify(err));
+		}
+    });
+}
+
+
+function processResponse(goalName) {
+  	document.getElementById(`${goalName}.row`).remove();
+  	const goalInForm = document.querySelector(`[name="${goalName}"]`);
+  	if(goalInForm) {
+		goalInForm.remove();
+		document.querySelector(`[name="${goalName}.target"]`).remove();
+  	}  
+}
+   
