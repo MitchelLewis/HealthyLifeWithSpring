@@ -30,18 +30,28 @@
 					</thead>
 					<tbody id="goal-table-body">
 						<c:forEach var="goal" items="${userSession.goals}">	
-							<tr>
+							<tr id="${goal.goalName}.row">
 								<td class="align-middle text-center"
 									id="${goal.goalName}">${goal.goalName}</td>
 								<td class="align-middle text-center"
 									id="${goal.goalName}-target">${goal.target} ${goal.goalUnit}</td>
-								<td class="align-middle text-center"><button
+								<td class="align-middle text-center">
+									<button
 										id="add-goal-btn" type="button"
-										class="btn btn-secondary text-white rounded mr-auto ml-auto"
+										class="btn btn-secondary text-white rounded mr-2 ml-auto"
 										data-bs-toggle="modal" data-bs-target="#addGoalModal"
 										onclick="addFormToDialog('${goal.goalName}', '${goal.goalUnit}')"
-										aria-label="Update goal for ${goal.goalName}">Update
-										goal</button></td>
+										aria-label="Update goal for ${goal.goalName}">
+										Update goal
+									</button>
+									<button
+										id="add-goal-btn" type="button"
+										class="btn btn-secondary text-white rounded mr-auto ml-auto"
+										onclick="deleteGoal('${goal.goalName}')"
+										aria-label="Remove ${goal.goalName} goal">
+										Remove
+									</button>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
