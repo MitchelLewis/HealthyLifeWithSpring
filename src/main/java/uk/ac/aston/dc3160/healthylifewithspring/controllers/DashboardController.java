@@ -17,7 +17,7 @@ public class DashboardController {
 		if(userSession.getUser_id() == null) {
 			return "redirect:/sign-in";
 		} else {
-			return "dashboard.jspx";
+			return "dashboard";
 		}
 	}
 	

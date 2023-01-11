@@ -33,7 +33,7 @@ public class UpdateProgressController {
 		if(userSession.getUser_id() == null) {
 			return "redirect:/sign-in";
 		} else {
-			return "update_progress.jspx";
+			return "update_progress";
 		}
 	}
 	
@@ -52,8 +52,8 @@ public class UpdateProgressController {
 				if(goal.getGoalName().equals(goalName)) {
 					goals.remove(goal);
 					Integer updatedProgress = goal.getCurrentProgress() + Integer.valueOf(goalUpdate);
-					Goal updatedGoal = new Goal(goal.getGoalName(), goal.getGoalUnit(), updatedProgress, goal.getTarget());
-					goals.add(updatedGoal);
+					goal.setCurrentProgress(updatedProgress);
+					goals.add(goal);
 					break;
 				}
 			} catch(NullPointerException e) {
@@ -61,10 +61,10 @@ public class UpdateProgressController {
 			}
 		}
 		try {
-			goalService.updateProgress(goals, userSession);
+			goalService.setGoals(goals);
 		} catch (Exception e) {
 			logger.error("Exception occurred: ", e);
-			ModelAndView modelAndView =  new ModelAndView("error.jsp");
+			ModelAndView modelAndView =  new ModelAndView("error");
 			return modelAndView;
 		}
 		userSession.setGoals(goals);

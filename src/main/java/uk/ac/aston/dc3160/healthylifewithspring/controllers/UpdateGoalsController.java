@@ -44,7 +44,7 @@ public class UpdateGoalsController {
 		if(userSession.getUser_id() == null) {
 			return "redirect:/sign-in";
 		} else {
-			return "update_goals.jspx";
+			return "update_goals";
 		}
 	}
 	
@@ -69,10 +69,10 @@ public class UpdateGoalsController {
 			}
 		}
 		try {
-			goalService.updateGoals(goals, userSession);
+			goalService.setGoals(goals);
 		} catch (Exception e) {
 			logger.error("Exception occurred: ", e);
-			ModelAndView modelAndView =  new ModelAndView("error.jsp");
+			ModelAndView modelAndView =  new ModelAndView("error");
 			return modelAndView;
 		}
 		userSession.setGoals(enteredGoals);
@@ -88,7 +88,7 @@ public class UpdateGoalsController {
         for(Goal goal: goals) {
             if(goal.getGoalName().equals(goalName)) {
                 try {
-                    goalService.deleteGoal(goalName, userSession);
+                    goalService.deleteGoal(goal.getId());
                     goals.remove(goal);
                     isSuccess = true;
                     break;

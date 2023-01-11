@@ -1,0 +1,77 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/header :: header('false')">
+</head>
+<body id="page-top">
+	<script src="js/validate-registration-form.js"></script>
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+		id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container d-flex align-items-center flex-column">
+			<h1 class="masthead-heading mb-0">REGISTER FOR AN ACCOUNT</h1>
+			<div th:replace="fragments/divider :: divider(false)"></div>
+		</div>
+	</header>
+	<section class="page-section" id="feature-1">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading text-secondary d-inline-block mb-0">ENTER YOUR DETAILS</h2>
+			</div>
+			<div th:replace="fragments/divider :: divider(true)"></div>
+			<div class="row">
+				<div class="col-lg-8 mr-auto ml-auto" id="input-col">
+					<div class="alert alert-danger " role="alert" th:if="${errors != null }">
+						<ul>
+							<li th:each="error:${errors}" th:text="${error}"></li>
+						</ul>
+					</div>
+
+					<form method="POST" th:action="sign-up" id="sign-up-form">
+						<!-- 2 column grid layout with text inputs for the first and last names -->
+						<div class="row mb-4">
+							<div class="col">
+								<div class="form-group">
+									<label class="form-label" for="first-name">First name</label> <input
+										type="text" id="first-name" class="form-control"
+										name="first-name" required/>
+		
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-group">
+									<label class="form-label" for="surname">Last name</label> <input
+										type="text" id="surname" class="form-control" name="surname" required/>
+		
+								</div>
+							</div>
+						</div>
+		
+								<!-- Email input -->
+								<div class="form-group mb-4">
+							<label class="form-label" for="email">Email address</label> <input
+								type="email" id="email" class="form-control" name="email" required/>
+						</div>
+		
+						<!-- Password input -->
+						<div class="form-group mb-4">
+							<label class="form-label" for="password">Password</label> <input
+								type="password" id="password" class="form-control"
+								name="password" required />
+		
+						</div>
+		
+						<!-- Submit button -->
+						<button type="submit" class="btn btn-success btn-block mb-4">Sign
+							up</button>
+		
+		
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+		document.getElementById('sign-up-form').addEventListener('submit', function(e) {validateRegistrationFormData(e)});
+	</script>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer('')"></footer>
+</body>
+</html>

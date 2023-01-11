@@ -1,0 +1,25 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('false')">
+</head>
+<body id="page-top">
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+		id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container d-flex align-items-center flex-column">
+			<h1 class="masthead-heading mb-0">COOKIES</h1>
+			<div th:replace="fragments/divider :: divider(false)"></div>
+		</div>
+	</header>
+
+	<section class="page-section" id="feature-1">
+		<div class="container large-text">
+			We use the following cookies:
+		<ul>
+			<li>JSESSIONID - so that we can keep you logged in and show your fitness information</li>
+		</ul>
+		</div>
+		
+	</section>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer('')"></footer>
+</body>
+</html>
