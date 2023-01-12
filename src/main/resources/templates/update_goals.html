@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header(true)">
+</head>
+<body id="page-top">
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+		id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container d-flex align-items-center flex-column">
+			<h1 class="masthead-heading mb-0">UPDATE YOUR GOALS</h1>
+			<div th:replace="fragments/divider :: divider(false)"></div>
+		</div>
+	</header>
+	<section class="page-section" id="feature-1">
+		<div class="container">
+			<div id="goal-container">
+				<table class="table" role="presentation" id="goal-table">
+					<thead>
+						<tr>
+							<th scope="col" class="text-center">Goal type</th>
+							<th scope="col" class="text-center">Current target</th>
+							<th scope="col" class="text-center"></th>
+						</tr>
+					</thead>
+					<tbody id="goal-table-body">
+						<tr th:each="goal:${session.userSession.goals}"
+							th:id="${goal.goalName} + '.row'">
+							<td class="align-middle text-center" th:id="${goal.goalName}" th:text="${goal.goalName}"></td>
+							<td class="align-middle text-center" th:id="${goal.goalName} + '-target'" th:text="${goal.target} + ' ' + ${goal.goalUnit}">
+								</td>
+							<td class="align-middle text-center">
+								<button id="add-goal-btn" type="button"
+									class="btn btn-secondary text-white rounded mr-2 ml-auto"
+									data-bs-toggle="modal" data-bs-target="#addGoalModal"
+									th:attr="onclick=|addFormToDialog('${goal.goalName}', '${goal.goalUnit}')|,aria-label=|Update goal for ${goal.goalName}|">Update
+									goal</button>
+								<button id="remove-goal-btn" type="button"
+									class="btn btn-secondary text-white rounded mr-auto ml-auto"
+									th:attr="onclick=|deleteGoal('${goal.goalName}')|,aria-label=|Remove ${goal.goalName} goal|" >Remove</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="addGoalModal" tabindex="-1"
+				aria-labelledby="addGoalModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title text-dark" id="addGoalModalLabel">Update
+								goal</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body" id="modal-body">
+							<!--  some content -->
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+							<input type="submit" class="btn btn-primary"
+								form="goal-entry-form" value="Update" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<form id="goal-info-form" method="POST" action="update-goals">
+				<div class="d-flex align-items-center flex-column">
+					<input type="submit" class="btn btn-primary mt-2 mb-4 align-middle"
+						value="Save changes" />
+				</div>
+			</form>
+		</div>
+	</section>
+	<script src="js/update-goal.js">
+	</script>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(true)"></footer>
+
+
+</body>
+</html>

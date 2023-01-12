@@ -1,9 +1,9 @@
 <html  xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header('false')">
+<head th:replace="fragments/header :: header(false)">
 </head>
 <body id="page-top">
-		<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
-		id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+	id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
 	<header class="masthead bg-primary text-white text-center">
 		<div class="container d-flex align-items-center flex-column">
 			<h1 class="masthead-heading mb-0">SIGN IN</h1>
@@ -52,6 +52,6 @@
 			</div>
 		</div>
 	</section>
-	<footer class="footer text-center" th:replace="fragments/footer :: footer('')"></footer>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(false)"></footer>
 </body>
 </html>

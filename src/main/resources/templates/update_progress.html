@@ -1,45 +1,39 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core">
-    <jsp:directive.page language="java"
-       contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
-<jsp:element name="html">
-<jsp:body>
-<head>
-	<jsp:include page="/WEB-INF/partials/header.jspx"/>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/header :: header(false)">
 </head>
 <body id="page-top">
-	<jsp:include page="/WEB-INF/partials/navbar.jspx"/>
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+		id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
 	<header class="masthead bg-primary text-white text-center">
 		<div class="container d-flex align-items-center flex-column">
 			<h1 class="masthead-heading mb-0">UPDATE YOUR PROGRESS</h1>
-			<jsp:include page="/WEB-INF/partials/divider.jspx"/>
+			<div th:replace="fragments/divider :: divider(false)"></div>
 		</div>
 	</header>
 	<section class="page-section" id="feature-1">
 		<div class="container d-flex align-items-center flex-column">
-			<c:forEach var="goal" items="${userSession.goals}">
-				<input type="hidden" id="${goal.goalName}.units"
-				name="${goal.goalName}.units"
-				value="${goal.goalUnit}"/> <input type="hidden"
-				id="${goal.goalName}.target"
-				name="${goal.goalName}.target"
-				value="${goal.target}"/> <input type="hidden"
-				id="${goal.goalName}.progress"
-				name="${goal.goalName}.progress"
-				value="${goal.currentProgress}"/>
-			</c:forEach>
+			<input type="hidden" 
+			th:each="goal:${session.userSession.goals}" th:id="${goal.goalName} + '.units'"
+			th:name="${goal.goalName} + '.units'"
+			th:value="${goal.goalUnit}"/> <input type="hidden"
+			th:each="goal:${session.userSession.goals}"
+			th:id="${goal.goalName} + '.target'"
+			th:name="${goal.goalName} + '.target'"
+			th:value="${goal.target}"/> <input type="hidden"
+			th:each="goal:${session.userSession.goals}"
+			th:id="${goal.goalName} + '.progress'"
+			th:name="${goal.goalName} + '.progress'"
+			th:value="${goal.currentProgress}"/>
 			<form method="POST" action="update-progress">
 				<div class="row large-text mb-2">
 					<div class="col-sm-4">Goal:</div>
 					<div class="col-sm-4">
 						<select name="goal" onchange="populateProgressFields(this)">
-							<option selected="selected">Select goal</option>
-							<c:forEach var="goal" items="${userSession.goals}">
-								<option value="${goal.goalName}">${goal.goalName}</option>
-							</c:forEach>
+							<option selected>Select goal</option>
+							<option th:each="goal:${session.userSession.goals}" th:value="${goal.goalName}" th:text="${goal.goalName}"></option>
 						</select>
 					</div>
-					<div class="col-sm-4" id="goal-units"><!--  some content --></div>
+					<div class="col-sm-4" id="goal-units"></div>
 				</div>
 				<div class="row large-text hidden mb-2">
 					<div class="col-sm-4">Target:</div>
@@ -59,7 +53,7 @@
 				</div>
 				<div class="row large-text hidden mb-2">
 					<div class="col-sm-4">Total:</div>
-					<div class="col-sm-4" id="total"><!-- some content --></div>
+					<div class="col-sm-4" id="total"></div>
 					<div class="col-sm-4" id="total-units">.</div>
 				</div>
 				<div class="d-flex align-items-center flex-column">
@@ -68,9 +62,7 @@
 			</form>
 		</div>
 	</section>
-	<script src="js/update-progress.js"><!-- some content --></script>
-	<jsp:include page="/WEB-INF/partials/footer.jspx"/>
+	<script src="js/update-progress.js"></script>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(false)"></footer>
 </body>
-</jsp:body>
-</jsp:element>
-</jsp:root>
+</html>

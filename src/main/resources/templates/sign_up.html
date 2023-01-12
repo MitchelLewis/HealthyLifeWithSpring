@@ -1,5 +1,5 @@
 <html  xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/header :: header('false')">
+<head th:insert="fragments/header :: header(false)">
 </head>
 <body id="page-top">
 	<script src="js/validate-registration-form.js"></script>
@@ -72,6 +72,6 @@
 	<script>
 		document.getElementById('sign-up-form').addEventListener('submit', function(e) {validateRegistrationFormData(e)});
 	</script>
-	<footer class="footer text-center" th:replace="fragments/footer :: footer('')"></footer>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(false)"></footer>
 </body>
 </html>
