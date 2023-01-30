@@ -1,10 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="header(addScripts)">
+<head th:fragment="header(addScripts, title)">
 <meta charset="utf-8"/>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-<title>Healthy Life</title>
+<title th:text="${title} + ' - Healthy Life'"></title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XD4SFZQJNR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XD4SFZQJNR');
+</script>
 <!-- Font Awesome icons (free version)-->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
