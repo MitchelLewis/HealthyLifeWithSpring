@@ -58,14 +58,22 @@ public class AddGoalsController {
 		}
 	}
 	
+	@RequestMapping(value = {"/add-new-goals"}, method = RequestMethod.GET)
+	public String addNewGoals(@ModelAttribute("userSession") UserSession userSession) {
+		if(userSession.getUser_id() == null) {
+			return "redirect:/sign-up";
+		} else {
+			return "add_goals";
+		}
+	}
+	
 	@ModelAttribute(name = "userSession")
 	public UserSession setUserInSession(UserSession userSession) {
 		return new UserSession();
 	}
 	
-	@RequestMapping(value = {"/add-goals"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = {"/add-goals", "/add-new-goals"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView handleAddGoals(@RequestParam Map<String, String> formData, @ModelAttribute("userSession") UserSession userSession, Model model) {
-		userSession.setGoals(new ArrayList<Goal>());
 		List<Goal> enteredGoals = new ArrayList<>();
 		int userId = userSession.getUser_id();
 		for(String goal: allGoals.keySet()) {
@@ -78,6 +86,10 @@ public class AddGoalsController {
 				continue;
 			}
 		}
+		if(userSession.getGoals() != null || userSession.getGoals().isEmpty()) {
+			enteredGoals.addAll(userSession.getGoals());
+		}
+		
 		try {
 			goalService.setGoals(enteredGoals);
 		} catch (Exception e) {

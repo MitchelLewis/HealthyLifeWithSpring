@@ -22,7 +22,7 @@
 						<h4 class="text-center">Goal: <span th:text="${goal.goalName}"></span></h4>			
 						<div class="progress">
 							<div class="progress-bar" role="progressbar" th:style="'width:' + ${#numbers.formatDecimal(((goal.currentProgress + 0.0) / (goal.target + 0.0)) * 100, 1, 2)} + '%'" th:attr="aria-valuenow=${goal.currentProgress},aria-valuemax=${goal.target}"
-								aria-valuemin="0" > <!-- some content -->
+								aria-valuemin="0" >
 							</div>
 						</div>
 						<p class="large-text mt-2">
@@ -78,8 +78,11 @@
 						</div>
 					</div>
 					<div class="row justify-content-center">
-						<a class="btn btn-primary large-text masthead-subheading" href="update-goals">
+						<a class="btn btn-primary large-text masthead-subheading mr-3" href="update-goals">
 							Update goals
+						</a>
+						<a class="btn btn-primary large-text masthead-subheading ml-3" href="add-new-goals">
+							Add new goals
 						</a>
 					</div> 
 				</div>
