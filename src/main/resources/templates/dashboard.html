@@ -92,15 +92,12 @@
 		<section class="page-section bg-primary text-white mb-0" id="feature-2">
 		<div class="container">
 			<div class="text-center">
-				<h2 class="page-section-heading d-inline-block mb-0">
-					ACHIEVEMENTS UNLOCKED</h2>
+				<h2 class="page-section-heading d-inline-block mb-2">
+					RECORDED PROGRESS ELSEWHERE?</h2>
 			</div>
 				<div class="container">
-					<div class="row d-flex justify-content-center">
-						<h3 class="portfolio text-center" th:if="${session.userSession.achievements} == null">You currently haven't earned any achievements</h3>
-					</div>
-					<div class="row d-flex justify-content-center">
-						<a href="" class="btn btn-secondary large-text">View this month's achievements</a>
+					<div class="row justify-content-center">
+						<a href="/import-progress" class="btn btn-secondary large-text">Import your progress here</a>
 					</div>
 				</div>
 			</div>
