@@ -86,7 +86,7 @@ public class AddGoalsController {
 				continue;
 			}
 		}
-		if(userSession.getGoals() != null || userSession.getGoals().isEmpty()) {
+		if(userSession.getGoals() != null) {
 			enteredGoals.addAll(userSession.getGoals());
 		}
 		

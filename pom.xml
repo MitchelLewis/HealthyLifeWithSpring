@@ -11,7 +11,7 @@
 	<groupId>uk.ac.aston.dc3160</groupId>
 	<artifactId>healthy-life-with-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>healthy-life-with-spring</name>
 	<description>DC3160 coursework</description>
 	<properties>
