@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.aston.dc3160.healthylifewithspring.models.Goal;
 import uk.ac.aston.dc3160.healthylifewithspring.models.UserSession;
 import uk.ac.aston.dc3160.healthylifewithspring.services.GoalService;
-import uk.ac.aston.dc3160.healthylifewithspring.services.UserRecordService;
+import uk.ac.aston.dc3160.healthylifewithspring.services.UserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +29,14 @@ public class SignInController {
 	Logger logger = LoggerFactory.getLogger(SignInController.class);
 
 	@Autowired
-	UserRecordService userRecordService;
+	UserService userRecordService;
 
 	@Autowired
 	GoalService goalService;
 	
 	@RequestMapping(value = "/sign-in", method = RequestMethod.GET)
 	public String signIn() {
-		return "sign_in.jspx";
+		return "sign_in";
 	}
 
 	@RequestMapping(value = "/sign-in", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -55,18 +55,18 @@ public class SignInController {
 				} else {
 					List<String> errors = new ArrayList<>();
 					errors.add("Your email/password is incorrect");
-					ModelAndView modelAndView =  new ModelAndView("sign_in.jspx");
+					ModelAndView modelAndView =  new ModelAndView("sign_in");
 					modelAndView.addObject("errors", errors);
 					return modelAndView;
 				}
 			} catch (Exception e) {
 				logger.error("Exception occurred: ", e);
-				ModelAndView modelAndView =  new ModelAndView("error.jsp");
+				ModelAndView modelAndView =  new ModelAndView("error");
 				return modelAndView;
 			}
 		} else {
 			List<String> invalidParameters = getInvalidParameters(formData);
-			ModelAndView modelAndView =  new ModelAndView("sign_in.jspx");
+			ModelAndView modelAndView =  new ModelAndView("sign_in");
 			modelAndView.addObject("errors", invalidParameters);
 			return modelAndView;
 		}
@@ -104,9 +104,9 @@ public class SignInController {
 
 	private Integer validateSignIn(String email, String password)
 			throws Exception {
-		Integer usersFound = userRecordService.getCredentials(email, password);
+		Integer usersFound = userRecordService.getUserIdForEmailAndPassword(email, password);
 		if(usersFound != null) {
-			return usersFound;
+			return usersFound.intValue();
 		} else {
 			return null;
 		}

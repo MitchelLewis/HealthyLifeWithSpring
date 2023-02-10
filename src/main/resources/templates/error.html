@@ -1,0 +1,16 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header(false, 'Something went wrong')">
+</head>
+<body id="page-top">
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+		id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container d-flex align-items-center flex-column">
+			<h1 class="masthead-heading mb-0">SOMETHING WENT WRONG!</h1>
+			<div th:replace="fragments/divider :: divider(false)"></div>
+			<p class="pre-wrap masthead-subheading font-weight-light mb-0">We couldn't process your request, please try again later!</p>
+		</div>
+	</header>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(false)"></footer>
+</body>
+</html>

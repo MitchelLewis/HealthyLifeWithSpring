@@ -1,28 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<jsp:include page="/WEB-INF/partials/header.jspx"/>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header(false, 'Add daily goals')">
 </head>
 <body id="page-top">
-	<jsp:include page="/WEB-INF/partials/navbar.jspx"/>
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+	id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
 	<header class="masthead bg-primary text-white text-center">
 		<div class="container d-flex align-items-center flex-column">
 			<h1 class="masthead-heading mb-0">ENTER YOUR DAILY GOALS</h1>
-			<jsp:include page="/WEB-INF/partials/divider.jspx"/>
+			<div th:replace="fragments/divider :: divider(false)"></div>
 			<div class="col-lg-8 mr-auto mt-2 mb-3 ml-auto text-center">
 				<button id="add-goal-btn" type="button"
 					class="btn btn-secondary text-white rounded large-text mr-auto ml-auto"
 					data-bs-toggle="modal" data-bs-target="#addGoalModal"
-					onclick="addFormToDialog()">Add goal</button>
+					th:onclick="addFormToDialog()">Add goal</button>
 			</div>
 		</div>
 	</header>
 
 	<section class="page-section" id="feature-1">
 		<div class="container">
-
 
 			<div id="goal-container">
 				<table class="table" role="presentation" id="goal-table">
@@ -33,7 +29,14 @@
 							<th scope="col" class="text-center"></th>
 						</tr>
 					</thead>
-					<tbody id="goal-table-body">
+						<tbody id="goal-table-body">
+						<tr th:each="goal:${session.userSession.goals}"
+							th:id="${goal.goalName} + '.row'">
+							<td class="align-middle text-center" th:id="${goal.goalName}" th:text="${goal.goalName}"></td>
+							<td class="align-middle text-center" th:id="${goal.goalName} + '-target'" th:text="${goal.target} + ' ' + ${goal.goalUnit}">
+								</td>
+							<td class="align-middle text-center"/>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -61,13 +64,13 @@
 			</div>
 
 			<div class="col-lg-8 mr-auto mt-2 mb-3 ml-auto text-center">
-				<form id="goal-info-form" method="POST" action="add-goals">
+				<form id="goal-info-form" method="POST" action="add-new-goals">
 				<button type="submit" id="next-btn" class="btn btn-primary" style="visibility: hidden;">Next</button>
 				</form>
 			</div>
 		</div>
 	</section>
-	<script src="js/add-goal.js"><!-- some thing --></script>
-	<jsp:include page="/WEB-INF/partials/footer.jspx"/>
+	<script src="js/add-goal.js"></script>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(false)"></footer>
 </body>
 </html>

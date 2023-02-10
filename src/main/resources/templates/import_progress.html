@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header(true, 'Import progress')">
+</head>
+<body id="page-top">
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+		id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container d-flex align-items-center flex-column">
+			<h1 class="masthead-heading mb-0">IMPORT YOUR PROGRESS</h1>
+			<div th:replace="fragments/divider :: divider(false)"></div>
+		</div>
+	</header>
+	<section class="page-section" id="feature-1">
+		<div class="container">
+			<div class="row mt-4 mb-4 d-flex justify-content-center">
+				<h2 class="page-section-heading text-secondary d-inline-block mb-0">IMPORT PROGRESS FROM A FILE</h2>
+			</div>
+			<div class="row mt-4 mb-4 d-flex justify-content-center">
+				<p class="large-text mt-2">Upload a .csv file with your goals. This will update your existing progress for the goals you are currently tracking.</p>			
+			</div>
+			<form id="import-progress-form" method="POST" action="import-progress" enctype="multipart/form-data">
+				<div class="alert alert-danger " role="alert" th:if="${errors != null }">
+					<ul>
+						<li th:each="error:${errors}" th:text="${error}"></li>
+					</ul>
+				</div>
+				<div class="mb-3">
+				  <label for="formFile" class="form-label">Upload your file (*.csv only)</label>
+				  <input class="form-control" type="file" name="formFile" id="formFile" accept=".csv">
+				</div>
+				<div class="row justify-content-center">
+					<input type="submit" id="upload-btn" class="btn btn-primary" value="Submit">
+				</div>
+			</form>
+			
+		</div>
+	</section>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(true)"></footer>
+
+
+</body>
+</html>

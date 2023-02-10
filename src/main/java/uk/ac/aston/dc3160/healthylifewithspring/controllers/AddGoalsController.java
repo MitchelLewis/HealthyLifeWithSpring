@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.ac.aston.dc3160.healthylifewithspring.models.Goal;
 import uk.ac.aston.dc3160.healthylifewithspring.models.UserSession;
 import uk.ac.aston.dc3160.healthylifewithspring.services.GoalService;
-import uk.ac.aston.dc3160.healthylifewithspring.services.UserRecordService;
+import uk.ac.aston.dc3160.healthylifewithspring.services.UserService;
 
 @Controller
 @SessionAttributes("userSession")
@@ -32,7 +32,7 @@ public class AddGoalsController {
 	private HashMap<String, String> allGoals;
 
 	@Autowired
-	UserRecordService userRecordService;
+	UserService userRecordService;
 
 	@Autowired
 	GoalService goalService;
@@ -54,7 +54,16 @@ public class AddGoalsController {
 		if(userSession.getUser_id() == null) {
 			return "redirect:/sign-up";
 		} else {
-			return "sign_up_success.jsp";
+			return "sign_up_success";
+		}
+	}
+	
+	@RequestMapping(value = {"/add-new-goals"}, method = RequestMethod.GET)
+	public String addNewGoals(@ModelAttribute("userSession") UserSession userSession) {
+		if(userSession.getUser_id() == null) {
+			return "redirect:/sign-up";
+		} else {
+			return "add_goals";
 		}
 	}
 	
@@ -63,25 +72,29 @@ public class AddGoalsController {
 		return new UserSession();
 	}
 	
-	@RequestMapping(value = {"/add-goals"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = {"/add-goals", "/add-new-goals"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView handleAddGoals(@RequestParam Map<String, String> formData, @ModelAttribute("userSession") UserSession userSession, Model model) {
-		userSession.setGoals(new ArrayList<Goal>());
 		List<Goal> enteredGoals = new ArrayList<>();
+		int userId = userSession.getUser_id();
 		for(String goal: allGoals.keySet()) {
 			try {
 				String goalTargetAsString = formData.get(goal + ".target");
 				int target = Integer.valueOf(goalTargetAsString);
-				Goal goalRecord = new Goal(goal, allGoals.get(goal), 0, target);
+				Goal goalRecord = new Goal(goal, allGoals.get(goal), 0, target, userId);
 				enteredGoals.add(goalRecord);
 			} catch(NullPointerException | NumberFormatException e) {
 				continue;
 			}
 		}
+		if(userSession.getGoals() != null || userSession.getGoals().isEmpty()) {
+			enteredGoals.addAll(userSession.getGoals());
+		}
+		
 		try {
-			goalService.setGoals(enteredGoals, userSession);
+			goalService.setGoals(enteredGoals);
 		} catch (Exception e) {
 			logger.error("Exception occurred: ", e);
-			ModelAndView modelAndView =  new ModelAndView("error.jsp");
+			ModelAndView modelAndView =  new ModelAndView("error");
 			return modelAndView;
 		}
 		ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");

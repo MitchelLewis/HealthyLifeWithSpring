@@ -9,7 +9,7 @@ public class CookieController {
 	
 	@RequestMapping(value = "/cookies", method = RequestMethod.GET)
 	public String cookies() {
-		return "cookies.jspx";
+		return "cookies";
 	}
 	
 }

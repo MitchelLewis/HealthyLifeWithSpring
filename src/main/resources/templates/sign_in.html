@@ -1,18 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core">
-    <jsp:directive.page language="java"
-       contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
-<jsp:element name="html">
-<jsp:body>
-<head>
-	<jsp:include page="/WEB-INF/partials/header.jspx"/>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header(false, 'Sign in')">
 </head>
 <body id="page-top">
-	<jsp:include page="/WEB-INF/partials/navbar.jspx"/>
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+	id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
 	<header class="masthead bg-primary text-white text-center">
 		<div class="container d-flex align-items-center flex-column">
 			<h1 class="masthead-heading mb-0">SIGN IN</h1>
-			<jsp:include page="/WEB-INF/partials/divider.jspx"/>
+			<div th:replace="fragments/divider :: divider(false)"></div>
 		</div>
 	</header>
 	<section class="page-section" id="feature-1">
@@ -22,34 +17,28 @@
 					YOUR DETAILS
 				</h2>
 			</div>
-			<jsp:include page="/WEB-INF/partials/divider.jspx">
-				<jsp:param name="isDarkDivider" value="true"/>
-			</jsp:include>
+			<div th:replace="fragments/divider :: divider(true)"></div>
 			<div class="row">
 				<div class="col-lg-8 mr-auto ml-auto">
-					<c:if test="${not empty errors }">
-						<div class="alert alert-danger" role="alert">
-							<ul>
-								<c:forEach var="error" items="${errors}">
-									<li><c:out value="${error}"></c:out></li>
-								</c:forEach>
-							</ul>
-						</div>
-					</c:if>
+					<div class="alert alert-danger " role="alert" th:if="${errors != null }">
+						<ul>
+							<li th:each="error:${errors}" th:text="${error}"></li>
+						</ul>
+					</div>
 
 					<form method="POST" action="sign-in">
 
 						<!-- Email input -->
 						<div class="form-group mb-4">
 							<label class="form-label" for="email">Email address</label> <input
-								type="email" id="email" class="form-control" name="email" required="true" />
+								type="email" id="email" class="form-control" name="email" required />
 						</div>
 
 						<!-- Password input -->
 						<div class="form-group mb-4">
 							<label class="form-label" for="password">Password</label> <input
 								type="password" id="password" class="form-control"
-								name="password" required="true" />
+								name="password" required />
 
 						</div>
 
@@ -63,8 +52,6 @@
 			</div>
 		</div>
 	</section>
-	<jsp:include page="/WEB-INF/partials/footer.jspx"/>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(false)"></footer>
 </body>
-</jsp:body>
-</jsp:element>
-</jsp:root>
+</html>

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import uk.ac.aston.dc3160.healthylifewithspring.models.UserSession;
-import uk.ac.aston.dc3160.healthylifewithspring.services.UserRecordService;
+import uk.ac.aston.dc3160.healthylifewithspring.services.UserService;
 
 @Controller
 @SessionAttributes("userSession")
@@ -26,11 +26,11 @@ public class SignUpController {
 	Logger logger = LoggerFactory.getLogger(SignUpController.class);
 	
 	@Autowired
-	UserRecordService userRecordService;
+	UserService userRecordService;
 
 	@RequestMapping(value = "/sign-up", method = RequestMethod.GET)
 	public String signUp() {
-		return "sign_up.jspx";
+		return "sign_up";
 	}
 	
 	@RequestMapping(value = "/sign-up", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -42,13 +42,13 @@ public class SignUpController {
                 return modelAndView;
             } else {
                 List<String> invalidParameters = getInvalidParameters(formData);
-				ModelAndView modelAndView = new ModelAndView("sign_up.jspx");
+				ModelAndView modelAndView = new ModelAndView("sign_up");
 				modelAndView.addObject("errors", invalidParameters);
 				return modelAndView;
             }
         } catch (Exception e) {
 			logger.error("Exception occurred: ", e);
-			ModelAndView modelAndView = new ModelAndView("error.jsp");
+			ModelAndView modelAndView = new ModelAndView("error");
 			return modelAndView;
         }
     }
@@ -103,7 +103,7 @@ public class SignUpController {
         String lName = formData.get("surname");
         String email = formData.get("email");
         String password = formData.get("password");
-        int userId = userRecordService.createNewUser(fName, lName, email, password);
+        int userId = (int) userRecordService.createNewUser(fName, lName, email, password);
         userSession.setUser_id(userId);
         userSession.setName(fName);
     }

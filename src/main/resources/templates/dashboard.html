@@ -1,0 +1,107 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header(false, 'Dashboard')">
+</head>
+<body id="page-top">
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top"
+	id="mainNav" th:replace="fragments/navbar :: navbar"></nav>
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container d-flex align-items-center flex-column">
+			<h1 class="masthead-heading mb-0">DASHBOARD</h1>
+			<div th:replace="fragments/divider :: divider(false)"></div>
+		</div>
+	</header>
+	<section class="page-section" id="feature-1">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading text-secondary d-inline-block mb-0">WELCOME, <span th:text="${session.userSession.name}"></span></h2>
+				<h3 class="mt-2">Let's see how you are getting on!</h3>
+			</div>
+			<div class="container">
+				<div class="row mt-4 mb-4 d-flex justify-content-center">
+					<div class="bg-secondary text-white rounded p-3 col-lg-4 mb-3 mt-3 mr-3 ml-3" th:each="goal:${session.userSession.goals}">
+						<h4 class="text-center">Goal: <span th:text="${goal.goalName}"></span></h4>			
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" th:style="'width:' + ${#numbers.formatDecimal(((goal.currentProgress + 0.0) / (goal.target + 0.0)) * 100, 1, 2)} + '%'" th:attr="aria-valuenow=${goal.currentProgress},aria-valuemax=${goal.target}"
+								aria-valuemin="0" >
+							</div>
+						</div>
+						<p class="large-text mt-2">
+							Progress: <span th:text="${goal.currentProgress}"></span> <span th:text="${goal.goalUnit}"></span>
+						</p>
+						<p class="large-text">
+							Target: <span th:text="${goal.target}"></span> <span th:text="${goal.goalUnit}"></span>
+						</p>
+						<div class="row container">
+						<a href="update-progress" class="btn btn-primary mt-2 mb-4" th:attr="aria-label='Update progress for ${goal.goalName}'">
+							Update progress
+						</a>
+						</div>
+						<div class="row container">
+						<a class="btn btn-primary" th:attr="aria-label='Update goals for ${goal.goalName}'"  href="update-goals">
+							Update goal
+						</a>
+						</div>
+					</div>					
+				</div>
+				</div>
+				</div>
+	</section>
+	<section class="page-section bg-primary text-white mb-0" id="feature-2">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading d-inline-block mb-0">
+					ENTER YOUR DAILY PROGRESS</h2>
+			</div>
+				<div class="container">
+					<div class="row mt-4 mb-4 d-flex justify-content-center">
+						<a class="btn btn-secondary large-text " href="update-progress">
+							Update progress
+						</a>
+					</div>
+				</div>
+			</div>
+	</section>
+	<section class="page-section" id="feature-3">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading text-secondary d-inline-block mb-0">
+					CURRENT GOALS</h2>
+			</div>
+				<div class="container">
+					<div class="row mt-4 mb-4 d-flex justify-content-center">
+						<div class="text-secondary p-3 mb-3 mt-3 mr-3 ml-3" th:each="goal:${session.userSession.goals}">
+							<h4 class="text-center">Goal: <span th:text="${goal.goalName}"></span> per day</h4>			
+
+							<p class="large-text mt-2">
+								Target: <span th:text="${goal.target}"></span> <span th:text="${goal.goalUnit}"></span>
+							</p>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<a class="btn btn-primary large-text masthead-subheading mr-3" href="update-goals">
+							Update goals
+						</a>
+						<a class="btn btn-primary large-text masthead-subheading ml-3" href="add-new-goals">
+							Add new goals
+						</a>
+					</div> 
+				</div>
+				
+			</div>
+	</section>
+		<section class="page-section bg-primary text-white mb-0" id="feature-2">
+		<div class="container">
+			<div class="text-center">
+				<h2 class="page-section-heading d-inline-block mb-2">
+					RECORDED PROGRESS ELSEWHERE?</h2>
+			</div>
+				<div class="container">
+					<div class="row justify-content-center">
+						<a href="/import-progress" class="btn btn-secondary large-text">Import your progress here</a>
+					</div>
+				</div>
+			</div>
+	</section>
+	<footer class="footer text-center" th:replace="fragments/footer :: footer(false)"></footer>
+</body>
+</html>

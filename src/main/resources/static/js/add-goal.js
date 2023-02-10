@@ -42,6 +42,14 @@ function removeGoal(id) {
 }
 
 function addFormToDialog() {
+	const initialGoalList = ['Calories', 'Protein', 'Salt', 'Sugar', 'Exercise', 'Working hours', 'Sleep'];
+	const goalsAlreadyAddedEntries = document.querySelectorAll('#goal-table-body > tr > td:nth-child(1)');
+	const goalsAlreadyAdded = [];
+	goalsAlreadyAddedEntries.forEach(goal => goalsAlreadyAdded.push(goal.innerHTML));
+	console.log('goalsAlreadyAdded ' + goalsAlreadyAdded);
+	const filteredGoals = initialGoalList.filter(value => !goalsAlreadyAdded.includes(value));
+	var goalOptionsHTMLAsString = '';
+	filteredGoals.forEach(goal => goalOptionsHTMLAsString += `<option id="${goal}" value="${goal}">${goal}</option>`);
 	const element = document.createElement('div');
 	element.innerHTML = `			        <form id="goal-entry-form">
 					<div class="container">
@@ -49,13 +57,7 @@ function addFormToDialog() {
 			        	<label class="text-dark text-right col-sm-4 col-form-label" for="goal-select">Goal</label>
 			        	<select class="text-dark col-sm-4" aria-label="Goal type" id="goal-select" onchange="onChangeForGoalSelection();" required>
 						  <option selected disabled value >Type</option>
-						  <option id="Calories" value="Calories">Calories</option>
-						  <option id="Protein" value="Protein">Protein</option>
-						  <option id="Salt" value="Salt">Salt</option>
-						  <option id="Sugar" value="Sugar">Sugar</option>
-						  <option id="Exercise" value="Exercise">Exercise</option>
-						  <option id="Working hours" value="Working hours">Working hours</option>
-						  <option id="Sleep" value="Sleep">Sleep</option>
+						  ${goalOptionsHTMLAsString}
 						</select>
 						</div>
 						<div class="form-group row">

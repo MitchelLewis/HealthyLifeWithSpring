@@ -5,36 +5,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import uk.ac.aston.dc3160.healthylifewithspring.database.dao.GoalDAO;
+import uk.ac.aston.dc3160.healthylifewithspring.database.GoalRepository;
 import uk.ac.aston.dc3160.healthylifewithspring.models.Goal;
-import uk.ac.aston.dc3160.healthylifewithspring.models.UserSession;
 
 @Service
 public class GoalService {
 	@Autowired
-	GoalDAO goalDAO;
+	GoalRepository repository;
 	
 	public List<Goal> getGoals(Integer userId) throws Exception {
-		return goalDAO.getUserGoals(userId);
+		return repository.findByUserId(userId);
 	}
 	
-	public void setGoals(List<Goal> goalsToSet, UserSession userSession) throws Exception {
-		int userId = userSession.getUser_id();
-		goalDAO.setUserGoals(goalsToSet, userId);
+	public List<Goal> setGoals(List<Goal> goalsToSet) throws Exception {
+		return (List<Goal>) repository.saveAll(goalsToSet);
 	}
 	
-	public void updateGoals(List<Goal> goalsToSet, UserSession userSession) throws Exception {
-		int userId = userSession.getUser_id();
-		goalDAO.updateGoals(goalsToSet, userId);
+	public void deleteGoal(int goalId) throws Exception {
+		repository.deleteById(goalId);
 	}
-	
-	public void deleteGoal(String goalName, UserSession userSession) throws Exception {
-		int userId = userSession.getUser_id();
-		goalDAO.deleteGoal(goalName, userId);
-	}
-	
-	public void updateProgress(List<Goal> goalsToUpdate, UserSession userSession) throws Exception {
-		int userId = userSession.getUser_id();
-		goalDAO.updateProgress(goalsToUpdate, userId);
-	}
+
 }
