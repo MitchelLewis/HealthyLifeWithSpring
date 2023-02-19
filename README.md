@@ -20,3 +20,7 @@ To test this application, do the following:
 - Navigate to the `test` folder
 - Run `npm install` to download all the necessary dependencies
 - Run `npm test` and observe the result
+
+## Purpose
+
+This application allows users to track and maintain their nutritional goals. Users can add nutritional goals and also update their progress on a daily basis. There are 7 distinct goals users can track and this progress can be imported from a 3rd party application or entered directly onto the webpages.
